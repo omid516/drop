@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#11251f"><title>Drop</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+  <main>
+    <section id="auth" class="auth-shell">
+      <div class="brand"><div class="brand-mark">D</div><div><h1>Drop</h1><p>ارسال امن فایل در شبکهٔ محل کار</p></div></div>
+      <form id="authForm" class="card auth-card">
+        <div class="segmented"><button type="button" class="active" data-mode="login">ورود</button><button type="button" data-mode="register">ثبت‌نام</button></div>
+        <label>نام شما<input name="name" autocomplete="username" minlength="2" required placeholder="مثلاً سارا"></label>
+        <label>PIN<input name="pin" type="password" inputmode="numeric" pattern="[0-9]{6,12}" autocomplete="current-password" required placeholder="۶ تا ۱۲ رقم"></label>
+        <label id="codeField" class="hidden">کد ثبت‌نام شرکت<input name="registrationCode" placeholder="در صورت فعال بودن"></label>
+        <button class="primary" type="submit">ورود به Drop</button><p id="authHint" class="hint">با نام و PIN خود وارد شوید.</p>
+      </form>
+    </section>
+
+    <section id="app" class="hidden app-shell">
+      <header><div class="brand compact"><div class="brand-mark">D</div><div><h1>Drop</h1><p id="networkStatus">drop.local · شبکهٔ داخلی</p></div></div><div class="account"><span id="me"></span><button id="logout" class="ghost">خروج</button></div></header>
+      <div class="layout">
+        <nav><button data-view="send" class="active"><span>↑</span> ارسال تازه</button><button data-view="inbox"><span>↓</span> فایل‌ها</button><button data-view="people"><span>●</span> افراد</button><button data-view="storage" id="adminNav" class="hidden"><span>◫</span> مدیریت</button></nav>
+        <div class="content">
+          <section id="sendView" class="view">
+            <div class="view-title"><div><p class="eyebrow">ارسال جدید</p><h2>چه چیزی را برای چه کسی بفرستیم؟</h2></div></div>
+            <div id="resumeCard" class="card resume-card hidden"><div><strong>یک ارسال نیمه‌کاره دارید</strong><p class="hint" id="resumeText"></p></div><button id="resumeButton" class="secondary">انتخاب دوباره و ادامه</button></div>
+            <div class="send-grid">
+              <div class="card upload-card">
+                <div id="dropzone" class="dropzone" tabindex="0"><div class="upload-icon">＋</div><h3>فایل یا پوشه را انتخاب کنید</h3><p>می‌توانید فایل‌ها را اینجا رها کنید</p><div><button id="pickFiles" class="secondary" type="button">انتخاب فایل</button><button id="pickFolder" class="ghost bordered" type="button">انتخاب پوشه</button></div></div>
+                <input id="fileInput" type="file" multiple hidden><input id="folderInput" type="file" webkitdirectory multiple hidden>
+                <div id="selection" class="selection empty">هنوز فایلی انتخاب نشده است.</div>
+              </div>
+              <div class="card recipients-card"><h3>گیرندگان</h3><p class="hint">یک یا چند همکار را انتخاب کنید.</p><div id="recipientList" class="recipient-list"></div><label class="title-label">عنوان ارسال<input id="transferTitle" placeholder="مثلاً گزارش جلسه"></label><button id="sendButton" class="primary" disabled>ارسال فایل</button></div>
+            </div>
+            <div id="progressCard" class="card progress-card hidden"><div class="progress-head"><strong id="progressText">در حال ارسال…</strong><span id="progressPercent">۰٪</span></div><div class="progress"><i id="progressBar"></i></div><small id="progressDetail"></small></div>
+          </section>
+
+          <section id="inboxView" class="view hidden"><div class="view-title"><div><p class="eyebrow">آرشیو مشترک</p><h2>فایل‌های شما</h2></div><button id="refreshTransfers" class="ghost bordered">تازه‌سازی</button></div><div class="tabs"><button class="active" data-filter="all">همه</button><button data-filter="received">دریافتی</button><button data-filter="sent">ارسالی</button></div><div id="transferList" class="transfer-list"></div></section>
+          <section id="peopleView" class="view hidden"><div class="view-title"><div><p class="eyebrow">اعضای شبکه</p><h2>همکاران</h2></div></div><div id="peopleList" class="people-grid"></div></section>
+          <section id="storageView" class="view hidden"><div class="view-title"><div><p class="eyebrow">پنل مدیر</p><h2>مدیریت Drop</h2></div><button id="refreshAdmin" class="ghost bordered">تازه‌سازی</button></div><div class="card storage-card"><div class="storage-ring" id="storageRing"><span id="storagePct">۰٪</span></div><div><h3 id="storageUsed">—</h3><p class="hint">از مجموع ۱۵ گیگابایت استفاده شده است.</p><p>برای آزادسازی فضا، فایل‌های قدیمی را از بخش فایل‌ها حذف کنید.</p></div></div><h3 class="section-heading">کاربران</h3><div id="adminUsers" class="admin-list"></div><h3 class="section-heading">آخرین رویدادها</h3><div id="auditList" class="audit-list card"></div></section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body></html>

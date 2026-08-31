@@ -1,0 +1,11 @@
+{
+  "port": 8088,
+  "host": "0.0.0.0",
+  "localName": "drop",
+  "dataDirectory": "./data",
+  "storageLimitBytes": 16106127360,
+  "reserveBytes": 1073741824,
+  "maxFileBytes": 2147483648,
+  "allowedRegistrationCidrs": ["127.0.0.0/8", "::1/128", "192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"],
+  "registrationCode": ""
+}

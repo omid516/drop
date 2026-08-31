@@ -1,0 +1,13 @@
+data/
+test-data/
+config.json
+*.db
+*.db-shm
+*.db-wal
+test-archive.zip
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
