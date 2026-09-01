@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#11251f"><title>Drop</title>
-  <link rel="stylesheet" href="/styles.css?v=0.6.1">
+  <link rel="stylesheet" href="/styles.css?v=0.7.0">
 </head>
 <body>
   <div id="toast" class="toast" role="status"></div>
@@ -20,9 +20,9 @@
     </section>
 
     <section id="app" class="hidden app-shell">
-      <header><div class="brand compact"><div class="brand-mark">D</div><div><h1>Drop</h1><p id="networkStatus">drop.local · شبکهٔ داخلی</p></div></div><div class="account"><span id="me"></span><button id="logout" class="ghost">خروج</button></div></header>
+      <header><div class="brand compact"><div class="brand-mark">D</div><div><h1>Drop</h1><p id="networkStatus">drop.local · شبکهٔ داخلی</p></div></div><div class="account"><button id="notificationButton" class="notification-button" type="button" aria-label="اعلان‌های جدید"><span aria-hidden="true">🔔</span><b id="notificationCount" class="notification-count hidden">۰</b></button><span id="me"></span><button id="logout" class="ghost">خروج</button></div></header>
       <div class="layout">
-        <nav><button data-view="send" class="active"><span>↑</span> ارسال تازه</button><button data-view="inbox"><span>↓</span> فایل‌ها</button><button data-view="people"><span>●</span> افراد</button><button data-view="storage" id="adminNav" class="hidden"><span>◫</span> مدیریت</button></nav>
+        <nav><button data-view="send" class="active"><span>↑</span> ارسال تازه</button><button data-view="inbox"><span>↓</span> دریافتی‌ها</button><button data-view="people"><span>●</span> افراد</button><button data-view="storage" id="adminNav" class="hidden"><span>◫</span> مدیریت</button></nav>
         <div class="content">
           <section id="sendView" class="view">
             <div class="view-title"><div><p class="eyebrow">ارسال جدید</p><h2>چه چیزی را برای چه کسی بفرستیم؟</h2></div></div>
@@ -38,12 +38,12 @@
             <div id="progressCard" class="card progress-card hidden"><div class="progress-head"><strong id="progressText">در حال ارسال…</strong><span id="progressPercent">۰٪</span></div><div class="progress"><i id="progressBar"></i></div><small id="progressDetail"></small></div>
           </section>
 
-          <section id="inboxView" class="view hidden"><div class="view-title"><div><p class="eyebrow">آرشیو مشترک</p><h2>فایل‌های شما</h2></div><button id="refreshTransfers" class="ghost bordered">تازه‌سازی</button></div><div class="tabs"><button class="active" data-filter="all">همه</button><button data-filter="received">دریافتی</button><button data-filter="sent">ارسالی</button></div><div id="transferList" class="transfer-list"></div></section>
+          <section id="inboxView" class="view hidden"><div class="view-title"><div><p class="eyebrow">آرشیو مشترک</p><h2>دریافتی‌ها</h2></div><button id="refreshTransfers" class="ghost bordered">تازه‌سازی</button></div><div class="tabs"><button class="active" data-filter="all">همه</button><button data-filter="received">دریافتی</button><button data-filter="sent">ارسالی</button></div><div id="transferList" class="transfer-list"></div></section>
           <section id="peopleView" class="view hidden"><div class="view-title"><div><p class="eyebrow">اعضای شبکه</p><h2>همکاران</h2></div></div><div id="peopleList" class="people-grid"></div></section>
           <section id="storageView" class="view hidden"><div class="view-title"><div><p class="eyebrow">پنل مدیر</p><h2>مدیریت Drop</h2></div><button id="refreshAdmin" class="ghost bordered">تازه‌سازی</button></div><div class="card storage-card"><div class="storage-ring" id="storageRing"><span id="storagePct">۰٪</span></div><div><h3 id="storageUsed">—</h3><p class="hint">از مجموع ۱۵ گیگابایت استفاده شده است.</p><p>برای آزادسازی فضا، فایل‌های قدیمی را از بخش فایل‌ها حذف کنید.</p></div></div><h3 class="section-heading">کاربران</h3><div id="adminUsers" class="admin-list"></div><h3 class="section-heading">آخرین رویدادها</h3><div id="auditList" class="audit-list card"></div></section>
         </div>
       </div>
     </section>
   </main>
-  <script type="module" src="/app.js?v=0.6.1"></script>
+  <script type="module" src="/app.js?v=0.7.0"></script>
 </body></html>

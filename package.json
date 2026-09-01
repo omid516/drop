@@ -1,6 +1,6 @@
 {
   "name": "drop-local",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Local-first file sharing for teams with chunked uploads and group delivery.",
   "private": true,
   "type": "module",
