@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS transfers(id TEXT PRIMARY KEY,sender_id TEXT NOT NULL
 CREATE TABLE IF NOT EXISTS transfer_files(id TEXT PRIMARY KEY,transfer_id TEXT NOT NULL,relative_path TEXT NOT NULL,stored_name TEXT NOT NULL,size INTEGER NOT NULL,uploaded INTEGER NOT NULL DEFAULT 0,FOREIGN KEY(transfer_id) REFERENCES transfers(id) ON DELETE CASCADE);
 CREATE TABLE IF NOT EXISTS recipients(transfer_id TEXT NOT NULL,user_id TEXT NOT NULL,seen_at INTEGER,download_count INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(transfer_id,user_id),FOREIGN KEY(transfer_id) REFERENCES transfers(id) ON DELETE CASCADE,FOREIGN KEY(user_id) REFERENCES users(id));
 CREATE TABLE IF NOT EXISTS replies(id TEXT PRIMARY KEY,transfer_id TEXT NOT NULL,user_id TEXT NOT NULL,text TEXT NOT NULL,created_at INTEGER NOT NULL,FOREIGN KEY(transfer_id) REFERENCES transfers(id) ON DELETE CASCADE,FOREIGN KEY(user_id) REFERENCES users(id));
+CREATE TABLE IF NOT EXISTS reply_reads(transfer_id TEXT NOT NULL,user_id TEXT NOT NULL,last_read_at INTEGER NOT NULL,PRIMARY KEY(transfer_id,user_id),FOREIGN KEY(transfer_id) REFERENCES transfers(id) ON DELETE CASCADE,FOREIGN KEY(user_id) REFERENCES users(id));
 CREATE TABLE IF NOT EXISTS audit_logs(id INTEGER PRIMARY KEY AUTOINCREMENT,actor_id TEXT,action TEXT NOT NULL,target_type TEXT,target_id TEXT,details TEXT,ip TEXT,created_at INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS idx_recipients_user ON recipients(user_id); CREATE INDEX IF NOT EXISTS idx_replies_transfer ON replies(transfer_id,created_at);`);
 try { db.exec('ALTER TABLE users ADD COLUMN blocked INTEGER NOT NULL DEFAULT 0'); } catch (e) { if (!String(e).includes('duplicate column')) throw e; }
@@ -93,11 +94,17 @@ const server=http.createServer(async(req,res)=>{
     if(req.method==='POST'&&url.pathname==='/api/transfers/seen'){
       const u=requireUser(req,res);if(!u)return;db.prepare('UPDATE recipients SET seen_at=COALESCE(seen_at,?) WHERE user_id=?').run(Date.now(),u.id);return json(res,200,{ok:true});
     }
+    if(req.method==='GET'&&url.pathname==='/api/replies/meta'){
+      const u=requireUser(req,res);if(!u)return;const rows=db.prepare(`SELECT t.id transfer_id,COUNT(DISTINCT p.id) reply_count,COUNT(DISTINCT CASE WHEN p.user_id<>? AND p.created_at>COALESCE(rr.last_read_at,0) AND (t.sender_id=? OR EXISTS(SELECT 1 FROM recipients rn WHERE rn.transfer_id=t.id AND rn.user_id=?)) THEN p.id END) unread_reply_count FROM transfers t LEFT JOIN recipients r ON r.transfer_id=t.id LEFT JOIN replies p ON p.transfer_id=t.id LEFT JOIN reply_reads rr ON rr.transfer_id=t.id AND rr.user_id=? WHERE t.sender_id=? OR r.user_id=? OR ?='admin' GROUP BY t.id`).all(u.id,u.id,u.id,u.id,u.id,u.id,u.role);return json(res,200,rows);
+    }
     if(req.method==='GET'&&/^\/api\/transfers\/[^/]+\/replies$/.test(url.pathname)){
       const u=requireUser(req,res);if(!u)return;const id=url.pathname.split('/')[3];if(!canAccessTransfer(u,id))return json(res,403,{error:'دسترسی ندارید'});return json(res,200,db.prepare('SELECT p.id,p.text,p.created_at,p.user_id,u.name user_name FROM replies p JOIN users u ON u.id=p.user_id WHERE p.transfer_id=? ORDER BY p.created_at').all(id));
     }
     if(req.method==='POST'&&/^\/api\/transfers\/[^/]+\/replies$/.test(url.pathname)){
       const u=requireUser(req,res);if(!u)return;const id=url.pathname.split('/')[3];if(!canAccessTransfer(u,id))return json(res,403,{error:'دسترسی ندارید'});const b=await readJson(req);const text=String(b.text||'').trim().slice(0,5000);if(!text)return json(res,400,{error:'پاسخ خالی است'});const replyId=randomId();db.prepare('INSERT INTO replies VALUES(?,?,?,?,?)').run(replyId,id,u.id,text,Date.now());const people=db.prepare('SELECT sender_id id FROM transfers WHERE id=? UNION SELECT user_id id FROM recipients WHERE transfer_id=?').all(id,id).map(x=>x.id).filter(x=>x!==u.id);broadcast('reply',{transferId:id,sender:u.name},people);audit(req,u,'reply_sent','transfer',id);return json(res,201,{id:replyId});
+    }
+    if(req.method==='POST'&&/^\/api\/transfers\/[^/]+\/replies\/seen$/.test(url.pathname)){
+      const u=requireUser(req,res);if(!u)return;const id=url.pathname.split('/')[3];if(!canAccessTransfer(u,id))return json(res,403,{error:'دسترسی ندارید'});db.prepare('INSERT INTO reply_reads(transfer_id,user_id,last_read_at) VALUES(?,?,?) ON CONFLICT(transfer_id,user_id) DO UPDATE SET last_read_at=excluded.last_read_at').run(id,u.id,Date.now());return json(res,200,{ok:true});
     }
     if(req.method==='GET'&&/^\/api\/transfers\/[^/]+\/status$/.test(url.pathname)){
       const u=requireUser(req,res);if(!u)return;const id=url.pathname.split('/')[3];const t=db.prepare('SELECT sender_id,created_at FROM transfers WHERE id=?').get(id);if(!t||(t.sender_id!==u.id&&u.role!=='admin'))return json(res,403,{error:'فقط فرستنده یا مدیر به وضعیت دسترسی دارد'});const rows=db.prepare('SELECT u.name,r.seen_at,r.download_count FROM recipients r JOIN users u ON u.id=r.user_id WHERE r.transfer_id=? ORDER BY u.name').all(id);return json(res,200,rows.map(x=>({...x,delivered_at:t.created_at})));
