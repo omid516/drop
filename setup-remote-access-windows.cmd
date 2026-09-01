@@ -26,6 +26,9 @@ call "%~dp0remote-access-status.cmd"
 exit /b
 :install_failed
 echo Tailscale installation failed. Check your internet connection and Winget.
+echo Opening the official download page...
+start "" "https://tailscale.com/download/windows"
+echo Install Tailscale, sign in, and run this file again as administrator.
 pause
 exit /b 1
 :connect_failed

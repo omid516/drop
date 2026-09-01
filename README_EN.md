@@ -33,6 +33,10 @@ Drop is a local-first file and message sharing application for small teams. It r
 
 No `npm install` step is required. Drop uses Node.js built-in modules, including `node:sqlite`.
 
+## Remote access
+
+Run `setup-remote-access-windows.cmd` as an administrator on the host. Office-LAN users continue without Tailscale; outside users install Tailscale and join with their own invited accounts. See the complete [secure remote access guide](REMOTE_ACCESS.md) for addresses and troubleshooting.
+
 ## Quick start on Windows
 
 1. Extract the release archive to a permanent folder.
