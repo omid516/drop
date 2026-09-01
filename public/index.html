@@ -26,14 +26,14 @@
         <div class="content">
           <section id="sendView" class="view">
             <div class="view-title"><div><p class="eyebrow">ارسال جدید</p><h2>چه چیزی را برای چه کسی بفرستیم؟</h2></div></div>
+            <div class="send-mode segmented" role="tablist" aria-label="نوع ارسال"><button type="button" class="active" data-send-mode="file">فقط فایل</button><button type="button" data-send-mode="text">فقط متن</button><button type="button" data-send-mode="both">متن + فایل</button></div>
             <div id="resumeCard" class="card resume-card hidden"><div><strong>یک ارسال نیمه‌کاره دارید</strong><p class="hint" id="resumeText"></p></div><button id="resumeButton" class="secondary">انتخاب دوباره و ادامه</button></div>
             <div class="send-grid">
               <div class="card upload-card">
-                <div id="dropzone" class="dropzone" tabindex="0"><div class="upload-icon">＋</div><h3>فایل یا پوشه را انتخاب کنید</h3><p>می‌توانید فایل‌ها را اینجا رها کنید</p><div><button id="pickFiles" class="secondary" type="button">انتخاب فایل</button><button id="pickFolder" class="ghost bordered" type="button">انتخاب پوشه</button></div></div>
-                <input id="fileInput" type="file" multiple hidden><input id="folderInput" type="file" webkitdirectory multiple hidden>
-                <div id="selection" class="selection empty">هنوز فایلی انتخاب نشده است.</div>
+                <div id="textComposer" class="text-composer hidden"><label for="messageText">پیام شما</label><textarea id="messageText" maxlength="10000" placeholder="متن خود را بنویسید…"></textarea><div class="composer-meta"><span>برای ارسال Enter + Ctrl</span><span id="messageCount">۰ / ۱۰٬۰۰۰</span></div></div>
+                <div id="fileComposer"><div id="dropzone" class="dropzone" tabindex="0"><div class="upload-icon">＋</div><h3>فایل یا پوشه را انتخاب کنید</h3><p>می‌توانید فایل‌ها را اینجا رها کنید</p><div><button id="pickFiles" class="secondary" type="button">انتخاب فایل</button><button id="pickFolder" class="ghost bordered" type="button">انتخاب پوشه</button></div></div><input id="fileInput" type="file" multiple hidden><input id="folderInput" type="file" webkitdirectory multiple hidden><div id="selection" class="selection empty">هنوز فایلی انتخاب نشده است.</div></div>
               </div>
-              <div class="card recipients-card"><h3>گیرندگان</h3><p class="hint">یک یا چند همکار را انتخاب کنید.</p><div id="recipientList" class="recipient-list"></div><label class="title-label">عنوان ارسال<input id="transferTitle" placeholder="مثلاً گزارش جلسه"></label><button id="sendButton" class="primary" disabled>ارسال فایل</button></div>
+              <div class="card recipients-card"><h3>گیرندگان</h3><p class="hint">یک یا چند همکار را انتخاب کنید.</p><div id="recipientList" class="recipient-list"></div><button id="sendButton" class="primary" disabled>ارسال فایل</button></div>
             </div>
             <div id="progressCard" class="card progress-card hidden"><div class="progress-head"><strong id="progressText">در حال ارسال…</strong><span id="progressPercent">۰٪</span></div><div class="progress"><i id="progressBar"></i></div><small id="progressDetail"></small></div>
           </section>
