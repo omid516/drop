@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#11251f"><title>Drop</title>
-  <link rel="stylesheet" href="/styles.css?v=0.8.1">
+  <link rel="stylesheet" href="/styles.css?v=0.9.0">
+  <script src="/i18n.js?v=0.9.0"></script>
 </head>
 <body>
   <div id="toast" class="toast" role="status"></div>
   <main>
     <section id="auth" class="auth-shell">
+      <button id="authLanguageButton" class="language-button auth-language" type="button" aria-label="تغییر زبان">EN</button>
       <div class="brand"><div class="brand-mark">D</div><div><h1>Drop</h1><p>ارسال امن فایل در شبکهٔ محل کار</p></div></div>
       <form id="authForm" class="card auth-card">
         <div class="segmented"><button type="button" class="active" data-mode="login">ورود</button><button type="button" data-mode="register">ثبت‌نام</button></div>
@@ -20,7 +22,7 @@
     </section>
 
     <section id="app" class="hidden app-shell">
-      <header><div class="brand compact"><div class="brand-mark">D</div><div><h1>Drop</h1><p id="networkStatus">drop.local · شبکهٔ داخلی</p></div></div><div class="account"><button id="notificationButton" class="notification-button" type="button" aria-label="اعلان‌های جدید"><span aria-hidden="true">🔔</span><b id="notificationCount" class="notification-count hidden">۰</b></button><span id="me"></span><button id="logout" class="ghost">خروج</button></div></header>
+      <header><div class="brand compact"><div class="brand-mark">D</div><div><h1>Drop</h1><p id="networkStatus">drop.local · شبکهٔ داخلی</p></div></div><div class="account"><button id="languageButton" class="language-button" type="button" aria-label="تغییر زبان">EN</button><button id="notificationButton" class="notification-button" type="button" aria-label="اعلان‌های جدید"><span aria-hidden="true">🔔</span><b id="notificationCount" class="notification-count hidden">۰</b></button><span id="me"></span><button id="logout" class="ghost">خروج</button></div></header>
       <div class="layout">
         <nav><button data-view="send" class="active"><span>↑</span> ارسال تازه</button><button data-view="inbox"><span>↓</span> دریافتی‌ها</button><button data-view="people"><span>●</span> افراد</button><button data-view="storage" id="adminNav" class="hidden"><span>◫</span> مدیریت</button></nav>
         <div class="content">
@@ -45,5 +47,5 @@
       </div>
     </section>
   </main>
-  <script type="module" src="/app.js?v=0.8.1"></script>
+  <script type="module" src="/app.js?v=0.9.0"></script>
 </body></html>
