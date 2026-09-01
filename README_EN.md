@@ -1,10 +1,10 @@
 # Drop
 
-[مستندات فارسی](README.md)
+[مستندات فارسی](README.md) · [Secure remote access](REMOTE_ACCESS.md)
 
 Drop is a local-first file and message sharing application for small teams. It runs on Windows, macOS, or Linux, while colleagues connect from any modern browser on the same network—without installing a client application.
 
-> Version `0.9.0` is ready for private local networks and includes complete Persian and English interfaces. Direct public internet exposure is not recommended.
+> Version `0.10.0` supports private local networks and secure remote access, with complete Persian and English interfaces. Direct public internet exposure is not recommended.
 
 ## Features
 
@@ -23,6 +23,7 @@ Drop is a local-first file and message sharing application for small teams. It r
 - Streaming ZIP downloads without temporary archive files
 - `drop.local` discovery on supported networks, with the LAN IP as fallback
 - Optional hidden automatic startup after Windows sign-in
+- Secure Tailscale remote access without router port forwarding
 
 ## Requirements
 
