@@ -56,7 +56,7 @@ async function serveStatic(req,res,url){
   const full = path.resolve(root, 'public', requested);
   const publicRoot = path.resolve(root,'public');
   if(!full.startsWith(publicRoot)) return false;
-  try { const st=await fsp.stat(full); if(!st.isFile()) return false; const ext=path.extname(full); const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.woff2':'font/woff2'}; res.writeHead(200,{'content-type':types[ext]||'application/octet-stream','cache-control':ext==='.html'?'no-cache':'public, max-age=3600'}); fs.createReadStream(full).pipe(res); return true; } catch { return false; }
+  try { const st=await fsp.stat(full); if(!st.isFile()) return false; const ext=path.extname(full); const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.woff2':'font/woff2'}; const cache=['.html','.css','.js'].includes(ext)?'no-store':'public, max-age=86400';res.writeHead(200,{'content-type':types[ext]||'application/octet-stream','cache-control':cache}); fs.createReadStream(full).pipe(res); return true; } catch { return false; }
 }
 
 const server=http.createServer(async(req,res)=>{
