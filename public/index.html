@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#11251f"><title>Drop</title>
-  <link rel="stylesheet" href="/styles.css?v=0.7.0">
+  <link rel="stylesheet" href="/styles.css?v=0.8.0">
 </head>
 <body>
   <div id="toast" class="toast" role="status"></div>
@@ -38,12 +38,12 @@
             <div id="progressCard" class="card progress-card hidden"><div class="progress-head"><strong id="progressText">در حال ارسال…</strong><span id="progressPercent">۰٪</span></div><div class="progress"><i id="progressBar"></i></div><small id="progressDetail"></small></div>
           </section>
 
-          <section id="inboxView" class="view hidden"><div class="view-title"><div><p class="eyebrow">آرشیو مشترک</p><h2>دریافتی‌ها</h2></div><button id="refreshTransfers" class="ghost bordered">تازه‌سازی</button></div><div class="tabs"><button class="active" data-filter="all">همه</button><button data-filter="received">دریافتی</button><button data-filter="sent">ارسالی</button></div><div id="transferList" class="transfer-list"></div></section>
+          <section id="inboxView" class="view hidden"><div class="view-title"><div><p class="eyebrow">آرشیو مشترک</p><h2>دریافتی‌ها</h2></div><button id="refreshTransfers" class="ghost bordered">تازه‌سازی</button></div><div class="inbox-tools"><input id="transferSearch" type="search" placeholder="جست‌وجوی متن، فایل یا فرستنده…"><select id="typeFilter" aria-label="نوع محتوا"><option value="all">همهٔ محتواها</option><option value="text">دارای متن</option><option value="file">دارای فایل</option><option value="unread">دیده‌نشده</option></select></div><div class="tabs"><button class="active" data-filter="all">همه</button><button data-filter="received">دریافتی</button><button data-filter="sent">ارسالی</button></div><div id="transferList" class="transfer-list"></div></section>
           <section id="peopleView" class="view hidden"><div class="view-title"><div><p class="eyebrow">اعضای شبکه</p><h2>همکاران</h2></div></div><div id="peopleList" class="people-grid"></div></section>
           <section id="storageView" class="view hidden"><div class="view-title"><div><p class="eyebrow">پنل مدیر</p><h2>مدیریت Drop</h2></div><button id="refreshAdmin" class="ghost bordered">تازه‌سازی</button></div><div class="card storage-card"><div class="storage-ring" id="storageRing"><span id="storagePct">۰٪</span></div><div><h3 id="storageUsed">—</h3><p class="hint">از مجموع ۱۵ گیگابایت استفاده شده است.</p><p>برای آزادسازی فضا، فایل‌های قدیمی را از بخش فایل‌ها حذف کنید.</p></div></div><h3 class="section-heading">کاربران</h3><div id="adminUsers" class="admin-list"></div><h3 class="section-heading">آخرین رویدادها</h3><div id="auditList" class="audit-list card"></div></section>
         </div>
       </div>
     </section>
   </main>
-  <script type="module" src="/app.js?v=0.7.0"></script>
+  <script type="module" src="/app.js?v=0.8.0"></script>
 </body></html>
